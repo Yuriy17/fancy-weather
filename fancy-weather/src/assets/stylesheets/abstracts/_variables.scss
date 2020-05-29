@@ -1,0 +1,82 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+/// Regular font family
+/// @type List
+$roboto-font: 'Roboto',sans-serif !default;
+
+/// Montserrat font family
+/// @type List
+$montserrat-font: 'Montserrat',sans-serif !default;
+
+///Background color
+///@type Color
+$main-color: #131313; 
+
+/// Light Gold
+/// @type Color
+$light-gold: #E3B873;
+
+/// Copy text color
+/// @type Color
+$text-color: rgb(34, 34, 34) !default;
+
+/// Main brand color
+/// @type Color
+$brand-color: rgb(229, 0, 80) !default;
+
+/// Light grey
+/// @type Color
+$light-grey: rgb(237, 237, 237) !default;
+
+/// Medium grey
+/// @type Color
+$mid-grey: rgb(153, 153, 153) !default;
+
+/// Dark grey
+/// @type Color
+$dark-grey: rgb(68, 68, 68) !default;
+
+$mdc-theme-primary: #fcb8ab;
+$mdc-theme-secondary: #feeae6;
+$mdc-theme-on-primary: #442b2d;
+$mdc-theme-on-secondary: #442b2d;
+
+$mdc-typography-styles-button: (
+    font-size: 1.6rem,
+    text-transform: none,
+);
+$mdc-typography-styles-subtitle1: (
+  font-size: 1.5rem,
+);
+$mdc-typography-font-family: unquote("Montserrat, Arial, Helvetica, sans-serif");
+$mdc-layout-grid-default-margin: (
+  desktop: 0px,
+  tablet: 0px,
+  phone: 0px
+) !default;
+
+/// Breakpoints map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+$breakpoints: (
+  'small': 375px,
+  'small-little': 475px,
+  'little': 560px,
+  'little-medium': 640px,
+  'medium': 768px,
+  'large': 1024px,
+  'extra-large': 1160px,
+  'huge': 1400px,
+  'extra-huge': 1556px
+) !default;
+
+
+
+
+
+
+
+
+

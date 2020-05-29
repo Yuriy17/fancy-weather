@@ -1,0 +1,459 @@
+@import "@material/layout-grid/mdc-layout-grid";
+@import "@material/button/mdc-button";
+@import "@material/theme/mdc-theme";
+@import "@material/select/mdc-select";
+@import "@material/list/mdc-list";
+@import "@material/menu-surface/mdc-menu-surface";
+@import "@material/menu/mdc-menu";
+@import "@material/textfield/mdc-text-field";
+@import "@material/typography/mdc-typography";
+
+
+#loading {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    visibility: hidden;
+    opacity: 0;
+    background: rgba(51, 51, 51, 0.5);
+    // transition: visibility 0s linear 1s, opacity 0.33s linear;
+    -webkit-animation: slide-down .9s ease;
+    -moz-animation: slide-down .9s ease-out;
+}
+
+@-webkit-keyframes slide-down {
+    0% { opacity: 0; -webkit-transform: translateY(-100%); }   
+  100% { opacity: 1; -webkit-transform: translateY(0); }
+}
+@-moz-keyframes slide-down {
+    0% { opacity: 0; -moz-transform: translateY(-100%); }   
+  100% { opacity: 1; -moz-transform: translateY(0); }
+}
+.header{
+    padding: 1% 10%;
+}
+.main{
+    padding: 1% 10%;
+}
+
+.control-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .mdc-select__selected-text{
+        line-height: 0.75rem;
+        padding-top: 15px;
+    }
+    .mdc-select__anchor{
+        height: 36px;
+    }
+    .mdc-select__dropdown-icon {
+        bottom: 6px;
+    }
+}
+
+.lang-panel-width {
+    width: 140px;
+    @media screen and (max-width: map-get($map: $breakpoints, $key: small)) {
+
+        width: 132px;
+
+    }
+}
+
+.search-input {
+    width: 100%;
+}
+
+.switch-panel{
+    min-width: 131px;
+    text-align: right;
+    @media screen and (max-width: map-get($map: $breakpoints, $key: small-little)) {
+
+        min-width: 95px;
+
+    }
+}
+
+.mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+}
+
+#forecast{
+    border-radius: 5px;
+}
+
+.current-state {
+    height: 80%;
+    font-family: 'MontserratBold';
+    padding-bottom: 6%;
+
+    // .current-state__location-info
+
+    &__location-info {
+        padding: 2% 2% 6% 2%;
+    }
+
+    // .current-state__places-name
+
+    &__places-name {
+        font-size: 4.4rem;
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-large)) {
+            font-size: 3.4rem;
+        }
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: small-little)) {
+
+            font-size: 2.8rem;
+    
+        }
+    }
+
+    // .current-state__date
+
+    &__date {
+        font-size: 2.4rem;
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-large)) {
+            font-size: 1.4rem;
+        
+        }
+    }
+
+    // .current-state__weather-info
+
+    &__weather-info {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    // .current-state__big-number
+
+    &__big-number {
+        font-size: 22rem;
+        display: flex;
+        align-items: center;
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-huge)) {
+
+            font-size: 20rem;
+    
+        }
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: huge)) {
+
+            font-size: 17rem;
+    
+        }
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-large)) {
+
+            font-size: 14rem;
+    
+        }
+        @media screen and (max-width: map-get($map: $breakpoints, $key: large)) {
+
+            font-size: 11rem;
+    
+        }
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: small-little)) {
+
+            font-size: 8rem;
+    
+        }
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: small)) {
+
+            font-size: 6rem;
+    
+        }
+    }
+
+    // .current-state__right_info
+
+    &__right_info {}
+
+    // .current-state__weather-icon
+
+    &__weather-icon>i {
+        font-size: 18rem;
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-huge)) {
+
+            font-size: 15rem;
+    
+        }
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-large)) {
+
+            font-size: 10rem;
+    
+        }
+        @media screen and (max-width: map-get($map: $breakpoints, $key: small-little)) {
+
+            font-size: 6rem;
+    
+        }
+    }
+
+    // .current-state__description
+
+    &__description {}
+
+
+    // .current-state__description-list
+
+    &__description-list {
+        line-height: 3.7rem;
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-large)) {
+
+            line-height: 2.7rem;
+    
+        }
+    }
+
+    // .current-state__description-item
+
+    &__description-item {
+        font-size: 2.2rem;
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-huge)) {
+
+            font-size: 1.8rem;
+    
+        }
+        @media screen and (max-width: map-get($map: $breakpoints, $key: huge)) {
+
+            font-size: 1.6rem;
+    
+        }
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-large)) {
+
+            font-size: 1.4rem;
+        }
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: small-little)) {
+
+            font-size: 1rem;
+    
+        }
+    }
+}
+
+.forecast {
+    display: flex;
+    justify-content: space-evenly;
+    height: 20%;
+
+    // .forecast__block
+
+    &__block {
+    }
+
+    // .forecast__day-title
+
+    &__day-title {
+        font-size: 2.2rem;
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-large)) {
+
+            font-size: 1.2rem;
+    
+        }
+    }
+
+    // .forecast__temperature-block
+
+    &__temperature-block {
+        display: flex;
+    }
+
+    // .forecast__temperature
+
+    &__temperature {
+        font-size: 8rem;
+        @media screen and (max-width: map-get($map: $breakpoints, $key: huge)) {
+
+            font-size: 6rem;
+    
+        }
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-large)) {
+
+            font-size: 4rem;
+    
+        }
+
+        @media screen and (max-width: map-get($map: $breakpoints, $key: little)) {
+
+            font-size: 3rem;
+    
+        }
+    }
+
+    // .forecast__icon
+
+    &__icon>i {
+        font-size: 4rem;
+        @media screen and (max-width: map-get($map: $breakpoints, $key: extra-large)) {
+
+            font-size: 2rem;
+    
+        }
+    }
+}
+
+#skycons1{
+    @media screen and (max-width: map-get($map: $breakpoints, $key: huge)) {
+
+        width: 112px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: large)) {
+
+        width: 96px;
+    }
+
+    @media screen and (max-width: map-get($map: $breakpoints, $key: little)) {
+
+        width: 80px;
+
+    }
+}
+
+#skycons2{
+        @media screen and (max-width: map-get($map: $breakpoints, $key: huge)) {
+
+        width: 56px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: large)) {
+
+        width: 48px;
+    }
+
+    @media screen and (max-width: map-get($map: $breakpoints, $key: little)) {
+
+        width: 40px;
+
+    }
+}
+#skycons3{
+        @media screen and (max-width: map-get($map: $breakpoints, $key: huge)) {
+
+        width: 56px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: large)) {
+
+        width: 48px;
+    }
+
+    @media screen and (max-width: map-get($map: $breakpoints, $key: little)) {
+
+        width: 40px;
+
+    }
+}
+#skycons4{
+        @media screen and (max-width: map-get($map: $breakpoints, $key: huge)) {
+
+        width: 56px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: large)) {
+
+        width: 48px;
+    }
+
+    @media screen and (max-width: map-get($map: $breakpoints, $key: little)) {
+
+        width: 40px;
+
+    }
+}
+
+.mdc-button{
+    @media screen and (max-width: map-get($map: $breakpoints, $key: little)) {
+
+        min-width: 56px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: small-little)) {
+
+        min-width: 48px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: small)) {
+
+        min-width: 32px;
+
+    }
+}
+
+#fahrenheit{
+    @media screen and (max-width: map-get($map: $breakpoints, $key: little)) {
+
+        padding: 0px 15px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: small-little)) {
+
+        padding: 0px 13px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: small)) {
+
+        padding: 0px 10px;
+
+    }
+}
+#celsius{
+    @media screen and (max-width: map-get($map: $breakpoints, $key: little)) {
+
+        padding: 0px 15px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: small-little)) {
+
+        padding: 0px 13px;
+
+    }
+    @media screen and (max-width: map-get($map: $breakpoints, $key: small)) {
+
+        padding: 0px 10px;
+
+    }
+}
+.map-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    // .map-panel__map
+
+    &__map {
+        border-radius: 5px;
+        min-width: 100%;
+        padding-bottom: 100%;
+        background-color: white;
+    }
+
+    // .map-panel__coordinates
+
+    &__coordinates {
+        border-radius: 0 0 5px 5px;
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        width: -moz-fit-content;
+        padding: 5px;
+    }
+
+    &__coordinate {
+        font-size: 2rem;
+    }
+
+}
