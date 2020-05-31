@@ -9,10 +9,11 @@ export default class AppModel {
 
     defaultPhotosURL = [
       './assets/img/default-background1.jpg',
-      './assets/img/default-background2.jpg',
+      './assets/img/default-background2.jpeg',
       './assets/img/default-background3.jpg',
       './assets/img/default-background4.jpg',
       './assets/img/default-background5.jpg',
+      './assets/img/default-background6.jpeg',
     ];
 
     async init(userWeather) {

@@ -1,18 +1,17 @@
 // -----------------------------------------------------------------------------
 // This file contains very basic styles.
 // -----------------------------------------------------------------------------
-html{
-    // remove horizont scroll
-    overflow-x: hidden;
-    margin-right: calc(-1 * (100vw - 100%));
+html {
+  // remove horizont scroll
+  overflow-x: hidden;
+  margin-right: calc(-1 * (100vw - 100%));
 }
-body{
-    a{
-        outline: none;
-    }
-    // fullscreen background
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
+body {
+  a {
+    outline: none;
+  }
+  // fullscreen background
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
 }
-

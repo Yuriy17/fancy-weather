@@ -69,7 +69,7 @@ export default class MapView {
       language,
       zoom: 3,
     });
-    this.searchInput = document.getElementById('search-input'); // in constructor not work?
+    this.searchInput = document.getElementById('search-input');
     this.searchInput.innerHTML = '';
     this.searchInput.appendChild(geocoder.onAdd(map));
     resolve(geocoder);

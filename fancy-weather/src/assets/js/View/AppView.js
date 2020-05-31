@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import { MDCSelect } from '@material/select';
 import { hasClass, addClass, removeClass } from '../utils/utils';
-import languages from '../Model/languages.json';
 
 export default class AppView {
     select;
@@ -107,7 +106,21 @@ export default class AppView {
 
     // eslint-disable-next-line class-methods-use-this
     addBackground(url) {
-      document.body.style.backgroundImage = `url("${url}")`;
+      document.body.style.backgroundImage = `linear-gradient(
+        0deg,
+        rgba(68, 66, 80, 0.5) 0%,
+        rgba(87, 85, 103, 0.5) 4%,
+        rgba(102, 100, 122, 0.5) 10%,
+        rgba(107, 105, 126, 0.5) 18%,
+        rgba(141, 140, 157, 0.5) 34%,
+        rgba(165, 164, 178, 0.5) 44%,
+        rgba(179, 179, 190, 0.5) 51%,
+        rgba(193, 193, 202, 0.5) 58%,
+        rgba(211, 211, 218, 0.5) 71%,
+        rgba(224, 224, 229, 0.5) 80%,
+        rgba(234, 234, 238, 0.5) 85%,
+        rgba(255, 255, 255, 0.5) 100%
+      ), url("${url}")`;
     }
 
 

@@ -45,13 +45,23 @@ export const coordinatesGeocoder = (query) => {
   return geocodes;
 };
 
-
 export function setMonth(date) {
-  const months = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
   return months[date.getMonth()];
 }
-
 
 export function hasClass(el, className) {
   if (el.classList) return el.classList.contains(className);
@@ -74,7 +84,7 @@ export function removeClass(el, className) {
 }
 
 function getSeason(date) {
-  return Math.floor((((date.getMonth() + 1) / 12) * 4)) % 4;
+  return Math.floor(((date.getMonth() + 1) / 12) * 4) % 4;
 }
 
 export function getSearchParams(userTime, userWeather, latitude) {
@@ -107,14 +117,15 @@ export function getSearchParams(userTime, userWeather, latitude) {
 
   const hour = userTime.getHours();
 
-  if (hour > 0 && hour < 6) timeOfDay = 'night';
-  if (hour >= 6 && hour < 12) timeOfDay = 'morning';
-  if (hour >= 12 && hour < 18) timeOfDay = 'afternoon';
-  if (hour > 0 && hour < 6) timeOfDay = 'evening';
-
-  console.log(latitude);
-
-  console.log(`${season},${timeOfDay},${weather}`);
+  if (hour > 0 && hour < 6) {
+    timeOfDay = 'night';
+  } else if (hour >= 6 && hour < 12) {
+    timeOfDay = 'morning';
+  } else if (hour >= 12 && hour < 18) {
+    timeOfDay = 'afternoon';
+  } else if (hour > 0 && hour < 6) {
+    timeOfDay = 'evening';
+  }
 
   return `${season},${timeOfDay},${weather}`;
 }

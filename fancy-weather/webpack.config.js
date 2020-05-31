@@ -76,7 +76,7 @@ module.exports = {
       }],
     },
     {
-      test: /\.(png|jpe?g|gif|jpg)$/i,
+      test: /\.(png|jpe?g|gif|jpg|jpeg)$/i,
       include: path.resolve(__dirname, 'src/assets/img'),
       use: [{
         loader: 'file-loader',

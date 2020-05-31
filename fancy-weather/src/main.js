@@ -1,10 +1,11 @@
 import './assets/stylesheets/main.scss';
 import './assets/img/favicon.ico';
 import './assets/img/default-background1.jpg';
-import './assets/img/default-background2.jpg';
+import './assets/img/default-background2.jpeg';
 import './assets/img/default-background3.jpg';
 import './assets/img/default-background4.jpg';
 import './assets/img/default-background5.jpg';
+import './assets/img/default-background6.jpeg';
 
 
 import AppController from './assets/js/Controller/AppController';
