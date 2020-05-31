@@ -25,11 +25,41 @@ export default class MapController {
         MapModel.MapboxGeocoder,
         this.model.map,
       );
+      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      this.view.addSpeechRecognitionIcon();
+      this.view.bindSpeechRecognition(this.handleSpeechRecognition.bind(this));
       await this.view.updateCoordinatesPanel(this.model.lat, this.model.lon);
       MapView.flyTo(this.model.map, this.model.lat, this.model.lon);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
+    }
+  }
+
+  handleSpeechRecognition() {
+    if (this.recognition) {
+      if (this.view.speechRecognitionElement.contains('active')) {
+        this.recognition.stop();
+      } else {
+        this.recognition.start();
+      }
+    } else {
+      this.recognition = new window.SpeechRecognition();
+      this.recognition.interimResults = true;
+      this.recognition.addEventListener('result', (e) => {
+        const transcript = Array.from(e.results)
+          .map((result) => result[0])
+          .map((result) => result.transcript)
+          .join('');
+        this.view.searchInputElement.value = transcript;
+      });
+      this.recognition.addEventListener('end', () => {
+        this.view.speechRecognitionElement.classList.remove('active');
+      });
+      this.recognition.addEventListener('start', () => {
+        this.view.speechRecognitionElement.classList.add('active');
+      });
+      this.recognition.start();
     }
   }
 
@@ -46,6 +76,7 @@ export default class MapController {
       this.model.map,
       lang,
     );
+    this.view.addSpeechRecognitionIcon();
   }
 
   getCoordinates = () => new Promise((resolve, reject) => {

@@ -3,110 +3,113 @@ import { MDCSelect } from '@material/select';
 import { hasClass, addClass, removeClass } from '../utils/utils';
 
 export default class AppView {
-    select;
+  select;
 
-    controlPanel;
+  controlPanel;
 
-    switchButtons;
+  switchButtons;
 
-    buttonReload;
+  buttonReload;
 
-    buttonF;
+  buttonF;
 
-    buttonC;
+  buttonC;
 
-    init() {
-      AppView.render();
-      this.controlPanel = document.querySelector('.control-panel');
-      [this.buttonReload, this.buttonF, this.buttonC] = this.controlPanel.querySelectorAll('.mdc-button__ripple');
-      this.select = new MDCSelect(document.querySelector('.mdc-select'));
-    }
+  init() {
+    AppView.render();
+    this.controlPanel = document.querySelector('.control-panel');
+    [
+      this.buttonReload,
+      this.buttonF,
+      this.buttonC,
+    ] = this.controlPanel.querySelectorAll('.mdc-button__ripple');
+    this.select = new MDCSelect(document.querySelector('.mdc-select'));
+  }
 
+  hideLoading = () => new Promise((resolve, reject) => {
+    const loading = document.getElementById('loading');
+    setTimeout(() => {
+      loading.style.visibility = 'hidden';
+      loading.style.opacity = '0';
+    }, 1300);
+    reject(new Error("Can't load"));
+  }).catch((error) => error);
 
-    hideLoading = () => new Promise((resolve, reject) => {
-      const loading = document.getElementById('loading');
-      setTimeout(() => {
-        loading.style.visibility = 'hidden';
-        loading.style.opacity = '0';
-      }, 1300);
-      reject(new Error('Can\'t load'));
-    }).catch((error) => error);
+  showLoading = () => new Promise((resolve, reject) => {
+    const loading = document.getElementById('loading');
+    loading.style.visibility = 'visible';
+    loading.style.opacity = '1';
+    reject(new Error("Can't load"));
+  }).catch((error) => error);
 
-    showLoading = () => new Promise((resolve, reject) => {
-      const loading = document.getElementById('loading');
-      loading.style.visibility = 'visible';
-      loading.style.opacity = '1';
-      reject(new Error('Can\'t load'));
-    }).catch((error) => error);
-
-    bindSearchCoordinates = (handler, geocoder) => new Promise((resolve, reject) => {
-      geocoder.on('result', (e) => {
-        const place = e.result.place_name.split(', ');
-        const city = place[0];
-        const country = place[place.length - 1];
-        /*         if (place[place.length - 1] === 2) {
+  bindSearchCoordinates = (handler, geocoder) => new Promise((resolve, reject) => {
+    geocoder.on('result', (e) => {
+      const place = e.result.place_name.split(', ');
+      const city = place[0];
+      const country = place[place.length - 1];
+      /*         if (place[place.length - 1] === 2) {
           const lang = e.result.language.toUpperCase();
           country = languages[lang].country[place[place.length - 1]];
         } else { */
 
-        handler(
-          e.result.center[1],
-          e.result.center[0],
-          city,
-          country,
-        );
-      });
-      reject(new Error('Can\'t bind geocoder locate on map'));
-    }).catch((error) => error);
+      handler(e.result.center[1], e.result.center[0], city, country);
+    });
+    reject(new Error("Can't bind geocoder locate on map"));
+  }).catch((error) => error);
 
+  bindChangeTemperatureType = (handler) => new Promise((resolve, reject) => {
+    this.buttonF.addEventListener('click', () => {
+      handler();
+    });
+    this.buttonC.addEventListener('click', () => {
+      handler();
+    });
+    reject(new Error("Can't bind geocoder locate on map"));
+  }).catch((error) => error);
 
-    bindChangeTemperatureType = (handler) => new Promise((resolve, reject) => {
-      this.buttonF.addEventListener('click', () => {
-        handler();
-      });
-      this.buttonC.addEventListener('click', () => {
-        handler();
-      });
-      reject(new Error('Can\'t bind geocoder locate on map'));
-    }).catch((error) => error);
+  bindChangeLanguage = (handler) => new Promise((resolve, reject) => {
+    this.select.listen('MDCSelect:change', () => {
+      handler(this.select.value);
+    });
+    reject(new Error("Can't bind change language"));
+  }).catch((error) => error);
 
-    bindChangeLanguage = (handler) => new Promise((resolve, reject) => {
-      this.select.listen('MDCSelect:change', () => {
-        handler(this.select.value);
-      });
-      reject(new Error('Can\'t bind change language'));
-    }).catch((error) => error);
+  bindChangeBackground = (handler) => new Promise((resolve, reject) => {
+    const reload = this.controlPanel.querySelector('button > span');
+    reload.addEventListener('click', () => handler());
+    reject(new Error("Can't bind change language"));
+  }).catch((error) => error);
 
-    bindChangeBackground = (handler) => new Promise((resolve, reject) => {
-      const reload = this.controlPanel.querySelector('button > span');
-      reload.addEventListener('click', () => handler());
-      reject(new Error('Can\'t bind change language'));
-    }).catch((error) => error);
-
-    changeTemperatureType() {
-      const buttonCelsius = this.buttonC.closest('button');
-      const buttonFahrenheit = this.buttonF.closest('button');
-      // toggle Fahrenheit and Celsius buttons
-      let type;
-      if (hasClass(buttonCelsius, 'mdc-button--raised') && hasClass(buttonFahrenheit, 'mdc-button--outlined')) {
-        removeClass(buttonCelsius, 'mdc-button--raised');
-        addClass(buttonCelsius, 'mdc-button--outlined');
-        removeClass(buttonFahrenheit, 'mdc-button--outlined');
-        addClass(buttonFahrenheit, 'mdc-button--raised');
-        type = 'us';
-      } else if (hasClass(buttonFahrenheit, 'mdc-button--raised') && hasClass(buttonCelsius, 'mdc-button--outlined')) {
-        removeClass(buttonCelsius, 'mdc-button--outlined');
-        addClass(buttonCelsius, 'mdc-button--raised');
-        removeClass(buttonFahrenheit, 'mdc-button--raised');
-        addClass(buttonFahrenheit, 'mdc-button--outlined');
-        type = 'uk2';
-      }
-      return type;
+  changeTemperatureType() {
+    const buttonCelsius = this.buttonC.closest('button');
+    const buttonFahrenheit = this.buttonF.closest('button');
+    // toggle Fahrenheit and Celsius buttons
+    let type;
+    if (
+      hasClass(buttonCelsius, 'mdc-button--raised')
+      && hasClass(buttonFahrenheit, 'mdc-button--outlined')
+    ) {
+      removeClass(buttonCelsius, 'mdc-button--raised');
+      addClass(buttonCelsius, 'mdc-button--outlined');
+      removeClass(buttonFahrenheit, 'mdc-button--outlined');
+      addClass(buttonFahrenheit, 'mdc-button--raised');
+      type = 'us';
+    } else if (
+      hasClass(buttonFahrenheit, 'mdc-button--raised')
+      && hasClass(buttonCelsius, 'mdc-button--outlined')
+    ) {
+      removeClass(buttonCelsius, 'mdc-button--outlined');
+      addClass(buttonCelsius, 'mdc-button--raised');
+      removeClass(buttonFahrenheit, 'mdc-button--raised');
+      addClass(buttonFahrenheit, 'mdc-button--outlined');
+      type = 'uk2';
     }
+    return type;
+  }
 
-    // eslint-disable-next-line class-methods-use-this
-    addBackground(url) {
-      document.body.style.backgroundImage = `linear-gradient(
+  // eslint-disable-next-line class-methods-use-this
+  addBackground(url) {
+    document.body.style.backgroundImage = `linear-gradient(
         0deg,
         rgba(68, 66, 80, 0.5) 0%,
         rgba(87, 85, 103, 0.5) 4%,
@@ -121,11 +124,12 @@ export default class AppView {
         rgba(234, 234, 238, 0.5) 85%,
         rgba(255, 255, 255, 0.5) 100%
       ), url("${url}")`;
-    }
+  }
 
-
-    static render() {
-      document.body.insertAdjacentHTML('afterbegin', `<main class="mdc-typography">
+  static render() {
+    document.body.insertAdjacentHTML(
+      'afterbegin',
+      `<main class="mdc-typography">
         <div id="loading">
             <div class="psoload">
               <div class="straight"></div>
@@ -190,6 +194,7 @@ export default class AppView {
                 </div>
             </div>
         </div>
-    </main>`);
-    }
+    </main>`,
+    );
+  }
 }

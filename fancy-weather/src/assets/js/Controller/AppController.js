@@ -30,6 +30,7 @@ export default class AppController {
           new MapView(),
         );
         await this.mapController.init();
+
         this.weatherController = new WeatherController(
           new WeatherModel(),
           new WeatherView(),
@@ -63,6 +64,7 @@ export default class AppController {
       this.handleChangeBackground();
       this.view.hideLoading();
     }
+
 
     async handleChangeTemperatureType() {
       await this.view.showLoading();

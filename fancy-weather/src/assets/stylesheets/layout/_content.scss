@@ -20,7 +20,6 @@
     visibility: hidden;
     opacity: 0;
     background: rgba(51, 51, 51, 0.5);
-    // transition: visibility 0s linear 1s, opacity 0.33s linear;
     -webkit-animation: slide-down .9s ease;
     -moz-animation: slide-down .9s ease-out;
 }
@@ -68,6 +67,33 @@
 
 .search-input {
     width: 100%;
+    .speech-recognition{
+        position: absolute;
+        right: 7px;
+        top: 8px;
+        cursor: pointer;
+
+        &:hover{
+            i{
+                color: pink;
+                font-size: 2rem;
+            } 
+        }
+        i{
+            color: gray;
+            font-size: 2rem;
+        }
+    }
+    .speech-recognition.active{
+        i{
+            font-size: 2.5rem;
+            color: red;
+        }
+    }
+
+/*     .mapboxgl-ctrl-geocoder--icon-search{
+        cursor: pointer;
+    } */
 }
 
 .switch-panel{

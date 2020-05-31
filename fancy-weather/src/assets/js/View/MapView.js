@@ -2,7 +2,9 @@ import { coordinatesGeocoder } from '../utils/utils';
 import languages from '../Model/languages.json';
 
 export default class MapView {
-  searchInput;
+  searchElement;
+
+  searchInputElement;
 
   longitude;
 
@@ -69,12 +71,31 @@ export default class MapView {
       language,
       zoom: 3,
     });
-    this.searchInput = document.getElementById('search-input');
-    this.searchInput.innerHTML = '';
-    this.searchInput.appendChild(geocoder.onAdd(map));
+    this.searchElement = document.getElementById('search-input');
+
+    this.searchElement.innerHTML = '';
+    this.searchElement.appendChild(geocoder.onAdd(map));
     resolve(geocoder);
     reject(new Error('Can\'t load geocoder'));
   }).catch((error) => error);
+
+  addSpeechRecognitionIcon() {
+    const search = document.getElementById('search-input');
+    const searchInputBlockElement = search.querySelector('.mapboxgl-ctrl');
+    this.searchInputElement = search.querySelector('.mapboxgl-ctrl-geocoder--input');
+    this.speechRecognitionElement = document.createElement('a');
+    this.speechRecognitionElement.classList.add('speech-recognition');
+    this.speechRecognitionElement.innerHTML = '<i class="material-icons">mic</i>';
+
+    searchInputBlockElement.append(this.speechRecognitionElement);
+  }
+
+  bindSpeechRecognition(handler) {
+    this.speechRecognitionElement.addEventListener('click', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
 
   changeLang(map, lang) {
     this.latitude.previousElementSibling.innerHTML = languages[lang].latitude;
