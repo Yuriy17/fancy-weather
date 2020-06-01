@@ -50,6 +50,10 @@ export default class AppView {
 
       handler(e.result.center[1], e.result.center[0], city, country);
     });
+    const inputElement = document.getElementById('search-input').querySelector('input');
+    document.getElementById('search-button').addEventListener('click', () => {
+      geocoder.query(inputElement.value);
+    });
     reject(new Error("Can't bind geocoder locate on map"));
   }).catch((error) => error);
 
@@ -173,8 +177,12 @@ export default class AppView {
                         </button>
                     </div>
                 </div>
-                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-8-tablet"> 
-                    <div class="search-input" id="search-input"></div>
+                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__inner mdc-layout-grid__cell--align-middle "> 
+                <div id="search-input" class="search-input mdc-layout-grid__cell mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-10 " ></div>
+                <button id="search-button" class="mdc-button mdc-button--raised  mdc-layout-grid__cell mdc-layout-grid__cell--span-2 mdc-layout-grid__cell--span-2-tablet">
+                    <span class="mdc-button__ripple"></span>
+                    Search
+                </button>
                 </div>
             </div>
             <div class="mdc-layout-grid__inner main">
