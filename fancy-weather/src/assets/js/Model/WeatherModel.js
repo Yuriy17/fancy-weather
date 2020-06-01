@@ -29,10 +29,10 @@ export default class WeatherModel {
 
   currentWeatherSummary;
 
-  async init(coords, locInfo, language = 'en') {
+  async init(coords, locInfo, language) {
     this.updateCoordinates(coords[0], coords[1], locInfo[1], locInfo[0]);
     this.lang = language;
-    console.log(this.lang);
+
     await this.updateWeatherData();
   }
 

@@ -47,10 +47,6 @@ export default class AppView {
       const place = e.result.place_name.split(', ');
       const city = place[0];
       const country = place[place.length - 1];
-      /*         if (place[place.length - 1] === 2) {
-          const lang = e.result.language.toUpperCase();
-          country = languages[lang].country[place[place.length - 1]];
-        } else { */
 
       handler(e.result.center[1], e.result.center[0], city, country);
     });
@@ -127,8 +123,6 @@ export default class AppView {
   }
 
   static render(temperatureType, language) {
-    console.log(temperatureType);
-
     document.body.insertAdjacentHTML(
       'afterbegin',
       `<main class="mdc-typography">

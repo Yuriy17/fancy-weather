@@ -13,9 +13,10 @@ export default class WeatherController {
       this.model.firstForecastData,
       this.model.secondForecastData,
       this.model.thirdForecastData,
+      this.model.lang,
     );
 
-    this.locale = setInterval(() => this.view.startTime(), 2000);
+    this.locale = setInterval(() => this.view.startTime(), 1000);
   }
 
   async handleSearchCoordinates(lat, lon, city, country) {

@@ -24,7 +24,6 @@ export default class AppController {
   async init() {
     try {
       this.model.setLocalStorage();
-      console.log(this.model.localData.language);
 
       this.view.init(this.model.localData.temperatureType, this.model.localData.language);
       await this.view.showLoading();
