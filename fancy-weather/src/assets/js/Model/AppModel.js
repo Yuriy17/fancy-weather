@@ -20,6 +20,21 @@ export default class AppModel {
       await this.reloadBackground(userWeather);
     }
 
+    setLocalStorage() {
+      if (window.localStorage.getItem('fancyWeatherLocalData')) {
+        this.localData = JSON.parse(window.localStorage.getItem('fancyWeatherLocalData'));
+      } else {
+        this.localData = {
+          language: 'en',
+          temperatureType: 'uk2',
+        };
+      }
+
+      window.addEventListener('beforeunload', () => {
+        window.localStorage.setItem('fancyWeatherLocalData', JSON.stringify(this.localData));
+      });
+    }
+
     async reloadBackground(currentTime, userWeather) {
       this.backgroundImageURL = await this.getBackgroundURL(currentTime, userWeather);
     }

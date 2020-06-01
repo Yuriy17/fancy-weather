@@ -38,7 +38,7 @@ export default class MapController {
 
   handleSpeechRecognition() {
     if (this.recognition) {
-      if (this.view.speechRecognitionElement.contains('active')) {
+      if (this.view.speechRecognitionElement.classList.contains('active')) {
         this.recognition.stop();
       } else {
         this.recognition.start();

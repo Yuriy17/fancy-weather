@@ -15,8 +15,8 @@ export default class AppView {
 
   buttonC;
 
-  init() {
-    AppView.render();
+  init(temperatureType, language) {
+    AppView.render(temperatureType, language);
     this.controlPanel = document.querySelector('.control-panel');
     [
       this.buttonReload,
@@ -126,7 +126,9 @@ export default class AppView {
       ), url("${url}")`;
   }
 
-  static render() {
+  static render(temperatureType, language) {
+    console.log(temperatureType);
+
     document.body.insertAdjacentHTML(
       'afterbegin',
       `<main class="mdc-typography">
@@ -154,24 +156,24 @@ export default class AppView {
 
                         <div class="mdc-select__menu mdc-menu mdc-menu-surface">
                             <ul class="mdc-list">
-                                <li class="mdc-list-item  mdc-list-item--selected" data-value="en">
+                                <li class="mdc-list-item  ${language === 'en' ? 'mdc-list-item--selected' : ''}" data-value="en">
                                     English
                                 </li>
-                                <li class="mdc-list-item" data-value="ru">
+                                <li class="mdc-list-item ${language === 'ru' ? 'mdc-list-item--selected' : ''}" data-value="ru">
                                     Русский
                                 </li>
-                                <li class="mdc-list-item" data-value="be">
+                                <li class="mdc-list-item ${language === 'be' ? 'mdc-list-item--selected' : ''}" data-value="be">
                                     Беларуская 
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="switch-panel">
-                        <button id="fahrenheit" class="mdc-button mdc-button--outlined">
+                        <button id="fahrenheit" class="mdc-button mdc-button--${temperatureType === 'us' ? 'raised' : 'outlined'}">
                             <span class="mdc-button__ripple"></span>
                             °F
                         </button>
-                        <button id="celsius" class="mdc-button  mdc-button--raised">
+                        <button id="celsius" class="mdc-button  mdc-button--${temperatureType === 'uk2' ? 'raised' : 'outlined'}">
                             <span class="mdc-button__ripple"></span>
                             °C
                         </button>

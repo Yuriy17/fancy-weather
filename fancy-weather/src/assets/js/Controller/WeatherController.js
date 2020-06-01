@@ -6,8 +6,8 @@ export default class WeatherController {
     this.view = view;
   }
 
-  async init(coords, locInfo) {
-    await this.model.init(coords, locInfo);
+  async init(coords, locInfo, language) {
+    await this.model.init(coords, locInfo, language);
     await this.view.init(
       this.model.currentWeatherData,
       this.model.firstForecastData,
