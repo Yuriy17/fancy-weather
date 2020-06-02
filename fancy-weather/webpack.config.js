@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const {
@@ -5,6 +6,7 @@ const {
 } = require('clean-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const path = require('path');
+
 
 module.exports = {
   entry: ['./src/main.js'],
@@ -15,7 +17,6 @@ module.exports = {
   },
   mode: 'development',
   devtool: 'inline-source-map',
-  // target: 'web',
   module: {
     rules: [{
       test: /\.html$/,
@@ -125,6 +126,7 @@ module.exports = {
     new SpriteLoaderPlugin({
       plainSprite: true,
     }),
+    new webpack.IgnorePlugin(/^electron$/),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),

@@ -8,7 +8,6 @@
         "mph": "mph",
         "humidity": "Humidity",
         "feelsLike": "Feels, like",
-        "basePlace": "Minsk,Belarus",
         "weekday":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
         "country":{
             "BD": "Bangladesh",
@@ -272,7 +271,6 @@
         "mph": "міля/г",
         "humidity": "Вільготнасць",
         "feelsLike": "Адчуваецца, як",
-        "basePlace": "Мінск, Беларусь",
         "weekday":["Нядзеля", "Панядзелак", "Чацвер", "Асяроддзе", "Чацвер", "Пятнiца", "Субота"],
         "country":{
             "BD": "Бангладэш",
@@ -536,7 +534,6 @@
         "mph": "миля/ч",
         "humidity": "Влажность",
         "feelsLike": "Ощущается, как",
-        "basePlace": "Минск, Беларусь",
         "weekday":["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
         "country":{
             "BD": "Бангладеш",

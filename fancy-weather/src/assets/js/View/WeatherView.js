@@ -32,20 +32,14 @@ export default class WeatherView {
     const currentContainer = document.createDocumentFragment();
     const currentState = document.createElement('div');
     currentState.className = 'current-state';
-    currentState.insertAdjacentHTML(
-      'beforeend',
-      this.addCurrentWeatherContent(current),
-    );
+    currentState.insertAdjacentHTML('beforeend', this.addCurrentWeatherContent(current));
     this.date = currentState.querySelector('.current-state__date');
     this.startTime(timezone);
     currentContainer.appendChild(currentState);
     const forecast = document.createElement('div');
     forecast.className = 'forecast';
     forecast.insertAdjacentHTML('beforeend', this.addNextWeatherContent(first));
-    forecast.insertAdjacentHTML(
-      'beforeend',
-      this.addNextWeatherContent(second),
-    );
+    forecast.insertAdjacentHTML('beforeend', this.addNextWeatherContent(second));
     forecast.insertAdjacentHTML('beforeend', this.addNextWeatherContent(third));
     currentContainer.appendChild(forecast);
     this.forecast.innerHTML = '';
@@ -80,44 +74,33 @@ export default class WeatherView {
       this.currentTime = new Date();
     }
 
-    this.date.innerHTML = today.toLocaleString(
-      languages[this.language].localeString,
-      options,
-    );
+    this.date.innerHTML = today.toLocaleString(languages[this.language].localeString, options);
   }
 
   addCurrentWeatherContent(current) {
     this.skyconsIdCount += 1;
     return `<div class="current-state__location-info">
-                 <div class="current-state__places-name">${current.city}, ${
-  current.country
-}</div>
+                 <div class="current-state__places-name">${current.city}, ${current.country}</div>
                  <div id="date" class="current-state__date"></div>
              </div>
              <div class="current-state__weather-info">
-                 <div class="current-state__big-number">${Math.round(
-    current.temperature,
-  )}°</div>
+                 <div class="current-state__big-number">${Math.round(current.temperature)}°</div>
                  <div class="current-state__right_info">
                      <span class="current-state__weather-icon"><canvas id="skycons${
   this.skyconsIdCount
 }" width="128" height="128"></canvas></span>
                      <div class="current-state__description">
                          <ul class="current-state__description-list">
-                             <li class="current-state__description-item">${
-  current.summary
-}</li>
-                             <li class="current-state__description-item">${
-  languages[this.language].feelsLike
-}: ${Math.round(current.apparentTemperature)}°</li>
-                             <li class="current-state__description-item">${
-  languages[this.language].wind
-}: ${Math.round(current.windSpeed)} ${
-  languages[this.language].mph
-} </li>
-                             <li class="current-state__description-item">${
-  languages[this.language].humidity
-}:  ${Math.round(current.humidity * 100)}%</li>
+                             <li class="current-state__description-item">${current.summary}</li>
+                             <li class="current-state__description-item">${languages[this.language].feelsLike}: ${Math.round(
+  current.apparentTemperature,
+)}°</li>
+                             <li class="current-state__description-item">${languages[this.language].wind}: ${Math.round(
+  current.windSpeed,
+)} ${languages[this.language].mph} </li>
+                             <li class="current-state__description-item">${languages[this.language].humidity}:  ${Math.round(
+  current.humidity * 100,
+)}%</li>
                          </ul>
                      </div>
                  </div>

@@ -1,4 +1,5 @@
 import languages from './languages.json';
+import { translateUtile } from '../utils/utils';
 
 export default class WeatherModel {
   lat;
@@ -10,6 +11,8 @@ export default class WeatherModel {
   country;
 
   lang;
+
+  previousLang;
 
   unit = 'uk2';
 
@@ -32,6 +35,7 @@ export default class WeatherModel {
   async init(coords, locInfo, language) {
     this.updateCoordinates(coords[0], coords[1], locInfo[1], locInfo[0]);
     this.lang = language;
+    this.previousLang = language;
 
     await this.updateWeatherData();
   }
@@ -54,6 +58,10 @@ export default class WeatherModel {
       country = languages[this.lang].country[this.country];
     } else {
       country = this.country;
+    }
+    if (this.previousLang === this.lang) {
+      this.city = await translateUtile(this.lang, this.previousLang, this.city);
+      this.previousLang = this.lang;
     }
     this.currentWeatherData = {
       icon: weatherJSON.currently.icon,

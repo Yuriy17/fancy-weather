@@ -20,9 +20,13 @@ export default class AppModel {
       await this.reloadBackground(userWeather);
     }
 
-    setLocalStorage() {
-      if (window.localStorage.getItem('fancyWeatherLocalData')) {
-        this.localData = JSON.parse(window.localStorage.getItem('fancyWeatherLocalData'));
+    setLocalData() {
+      const fancyLocalStorage = window.localStorage.getItem('fancyWeatherLocalData');
+      console.log(fancyLocalStorage);
+
+      if (fancyLocalStorage) {
+        this.localData = JSON.parse(fancyLocalStorage);
+        console.log(this.localData);
       } else {
         this.localData = {
           language: 'en',

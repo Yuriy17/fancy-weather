@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const coordinatesGeocoder = (query) => {
   // match anything which looks like a decimal degrees coordinate pair
   const matches = query.match(
@@ -128,4 +127,10 @@ export function getSearchParams(userTime, userWeather, latitude) {
   }
 
   return `${season},${timeOfDay},${weather}`;
+}
+
+export async function translateUtile(targetLang, sourceLang, sourceText) {
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${
+    sourceLang}&tl=${targetLang}&dt=t&q=${encodeURI(sourceText)}`;
+  return fetch(url);
 }
