@@ -35,7 +35,7 @@ export default class WeatherModel {
   async init(coords, locInfo, language) {
     this.updateCoordinates(coords[0], coords[1], locInfo[1], locInfo[0]);
     this.lang = language;
-    this.previousLang = language;
+    this.previousLang = 'en';
 
     await this.updateWeatherData();
   }
@@ -59,7 +59,7 @@ export default class WeatherModel {
     } else {
       country = this.country;
     }
-    if (this.previousLang === this.lang) {
+    if (this.previousLang !== this.lang) {
       this.city = await translateUtile(this.lang, this.previousLang, this.city);
       this.previousLang = this.lang;
     }

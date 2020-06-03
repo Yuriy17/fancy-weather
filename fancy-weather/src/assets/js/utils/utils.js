@@ -129,8 +129,8 @@ export function getSearchParams(userTime, userWeather, latitude) {
   return `${season},${timeOfDay},${weather}`;
 }
 
-export async function translateUtile(targetLang, sourceLang, sourceText) {
+export function translateUtile(targetLang, sourceLang, sourceText) {
   const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${
     sourceLang}&tl=${targetLang}&dt=t&q=${encodeURI(sourceText)}`;
-  return fetch(url);
+  return fetch(url).then((response) => response.json()).then((response) => response[0][0][0]);
 }

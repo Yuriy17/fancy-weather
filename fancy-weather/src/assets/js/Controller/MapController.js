@@ -7,33 +7,19 @@ export default class MapController {
     this.view = view;
   }
 
-  async init() {
-    try {
-      this.model.map = await MapView.addMap(MapModel.mapboxgl);
-      [this.model.lat,
-        this.model.lon,
-        this.model.country,
-        this.model.city] = await MapModel.addCurrentLocation();
-      this.model.marker = await MapView.addMarker(
-        MapModel.mapboxgl,
-        this.model.map,
-        this.model.lat,
-        this.model.lon,
-      );
-      this.model.geocoder = await MapView.addGeocoder(
-        MapModel.mapboxgl,
-        MapModel.MapboxGeocoder,
-        this.model.map,
-      );
-      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      this.view.addSpeechRecognitionIcon();
-      this.view.bindSpeechRecognition(this.handleSpeechRecognition.bind(this));
-      await this.view.updateCoordinatesPanel(this.model.lat, this.model.lon);
-      MapView.flyTo(this.model.map, this.model.lat, this.model.lon);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
+  async init(language) {
+    this.model.map = await MapView.addMap(MapModel.mapboxgl);
+    [this.model.lat, this.model.lon, this.model.country, this.model.city] = await MapModel.addCurrentLocation();
+    this.model.marker = await MapView.addMarker(MapModel.mapboxgl, this.model.map, this.model.lat, this.model.lon);
+
+    this.model.geocoder = await MapView.addGeocoder(MapModel.mapboxgl, MapModel.MapboxGeocoder, this.model.map, language);
+
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    this.view.addSpeechRecognitionIcon();
+    this.view.bindSpeechRecognition(this.handleSpeechRecognition.bind(this));
+
+    await this.view.updateCoordinatesPanel(this.model.lat, this.model.lon);
+    MapView.flyTo(this.model.map, this.model.lat, this.model.lon);
   }
 
   handleSpeechRecognition() {
@@ -70,24 +56,25 @@ export default class MapController {
 
   async handleChangeLanguage(lang) {
     this.view.changeLang(this.model.map, lang);
-    this.model.geocoder = await MapView.addGeocoder(
-      MapModel.mapboxgl,
-      MapModel.MapboxGeocoder,
-      this.model.map,
-      lang,
-    );
+    this.model.geocoder = await MapView.addGeocoder(MapModel.mapboxgl, MapModel.MapboxGeocoder, this.model.map, lang);
     this.view.addSpeechRecognitionIcon();
   }
 
-  getCoordinates = () => new Promise((resolve, reject) => {
-    const arr = [this.model.lat, this.model.lon];
-    resolve(arr);
-    reject(new Error('Can\'t getCoordinates'));
-  }).catch((error) => error);
+  getCoordinates = () => new Promise((resolve) => {
+    if (this.model.lat && this.model.lon) {
+      const arr = [this.model.lat, this.model.lon];
+      resolve(arr);
+    } else {
+      throw new Error("Can't getCoordinates");
+    }
+  });
 
-  getLocationInfo = () => new Promise((resolve, reject) => {
-    const arr = [this.model.country, this.model.city];
-    resolve(arr);
-    reject(new Error('Can\'t getCoordinates'));
-  }).catch((error) => error);
+  getLocationInfo = () => new Promise((resolve) => {
+    if (this.model.country && this.model.city) {
+      const arr = [this.model.country, this.model.city];
+      resolve(arr);
+    } else {
+      throw new Error("Can't getLocationInfo");
+    }
+  });
 }

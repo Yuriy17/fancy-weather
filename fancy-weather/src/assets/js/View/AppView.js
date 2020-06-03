@@ -26,59 +26,83 @@ export default class AppView {
     this.select = new MDCSelect(document.querySelector('.mdc-select'));
   }
 
-  hideLoading = () => new Promise((resolve, reject) => {
+  hideLoading = () => new Promise((resolve) => {
     const loading = document.getElementById('loading');
-    setTimeout(() => {
-      loading.style.visibility = 'hidden';
-      loading.style.opacity = '0';
-    }, 1300);
-    reject(new Error("Can't load"));
-  }).catch((error) => error);
+    if (loading) {
+      setTimeout(() => {
+        loading.style.visibility = 'hidden';
+        loading.style.opacity = '0';
+        resolve(loading);
+      }, 1300);
+    } else {
+      throw new Error("Can't load");
+    }
+  });
 
-  showLoading = () => new Promise((resolve, reject) => {
+  showLoading = () => new Promise((resolve) => {
     const loading = document.getElementById('loading');
-    loading.style.visibility = 'visible';
-    loading.style.opacity = '1';
-    reject(new Error("Can't load"));
-  }).catch((error) => error);
+    if (loading) {
+      loading.style.visibility = 'visible';
+      loading.style.opacity = '1';
+      resolve(loading);
+    } else {
+      throw new Error("Can't load");
+    }
+  });
 
-  bindSearchCoordinates = (handler, geocoder) => new Promise((resolve, reject) => {
-    geocoder.on('result', (e) => {
-      const place = e.result.place_name.split(', ');
-      const city = place[0];
-      const country = place[place.length - 1];
+  bindSearchCoordinates = (handler, geocoder) => new Promise((resolve) => {
+    if (geocoder && handler) {
+      geocoder.on('result', (e) => {
+        const place = e.result.place_name.split(', ');
+        const city = place[0];
+        const country = place[place.length - 1];
 
-      handler(e.result.center[1], e.result.center[0], city, country);
-    });
-    const inputElement = document.getElementById('search-input').querySelector('input');
-    document.getElementById('search-button').addEventListener('click', () => {
-      geocoder.query(inputElement.value);
-    });
-    reject(new Error("Can't bind geocoder locate on map"));
-  }).catch((error) => error);
+        handler(e.result.center[1], e.result.center[0], city, country);
+      });
+      const inputElement = document.getElementById('search-input').querySelector('input');
+      document.getElementById('search-button').addEventListener('click', () => {
+        geocoder.query(inputElement.value);
+      });
+      resolve(geocoder);
+    } else {
+      throw new Error("Can't bind geocoder locate on map");
+    }
+  });
 
-  bindChangeTemperatureType = (handler) => new Promise((resolve, reject) => {
-    this.buttonF.addEventListener('click', () => {
-      handler();
-    });
-    this.buttonC.addEventListener('click', () => {
-      handler();
-    });
-    reject(new Error("Can't bind geocoder locate on map"));
-  }).catch((error) => error);
+  bindChangeTemperatureType = (handler) => new Promise((resolve) => {
+    if (handler && this.buttonF && this.buttonC) {
+      this.buttonF.addEventListener('click', () => {
+        handler();
+      });
+      this.buttonC.addEventListener('click', () => {
+        handler();
+      });
+      resolve();
+    } else {
+      throw new Error("Can't bind geocoder locate on map");
+    }
+  });
 
-  bindChangeLanguage = (handler) => new Promise((resolve, reject) => {
-    this.select.listen('MDCSelect:change', () => {
-      handler(this.select.value);
-    });
-    reject(new Error("Can't bind change language"));
-  }).catch((error) => error);
+  bindChangeLanguage = (handler) => new Promise((resolve) => {
+    if (this.select && handler) {
+      this.select.listen('MDCSelect:change', () => {
+        handler(this.select.value);
+      });
+      resolve();
+    } else {
+      throw new Error("Can't bind change language");
+    }
+  });
 
-  bindChangeBackground = (handler) => new Promise((resolve, reject) => {
+  bindChangeBackground = (handler) => new Promise((resolve) => {
     const reload = this.controlPanel.querySelector('button > span');
-    reload.addEventListener('click', () => handler());
-    reject(new Error("Can't bind change language"));
-  }).catch((error) => error);
+    if (reload && handler) {
+      reload.addEventListener('click', () => handler());
+      resolve();
+    } else {
+      throw new Error("Can't bind change language");
+    }
+  });
 
   changeTemperatureType() {
     const buttonCelsius = this.buttonC.closest('button');

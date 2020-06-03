@@ -24,42 +24,24 @@ export default class AppController {
   async init() {
     try {
       this.model.setLocalData();
-      console.log(this.model.localData.language);
-
       this.view.init(this.model.localData.temperatureType, this.model.localData.language);
       await this.view.showLoading();
       this.mapController = new MapController(new MapModel(), new MapView());
-      await this.mapController.init();
+      await this.mapController.init(this.model.localData.language);
 
-      this.weatherController = new WeatherController(
-        new WeatherModel(),
-        new WeatherView(),
-      );
+      this.weatherController = new WeatherController(new WeatherModel(), new WeatherView());
       const coords = await this.mapController.getCoordinates();
       const locInfo = await this.mapController.getLocationInfo();
 
       this.model.updateCoordinates(coords);
 
-      await this.weatherController.init(
-        coords,
-        locInfo,
-        this.model.localData.language,
-      );
-      await this.view.bindSearchCoordinates(
-        this.handleSearch.bind(this),
-        this.mapController.model.geocoder,
-      );
-      await this.view.bindChangeTemperatureType(
-        this.handleChangeTemperatureType.bind(this),
-      );
+      await this.weatherController.init(coords, locInfo, this.model.localData.language);
+
+      await this.view.bindSearchCoordinates(this.handleSearch.bind(this), this.mapController.model.geocoder);
+      await this.view.bindChangeTemperatureType(this.handleChangeTemperatureType.bind(this));
       await this.view.bindChangeLanguage(this.handleChangeLanguage.bind(this));
-      await this.view.bindChangeBackground(
-        this.handleChangeBackground.bind(this),
-      );
-      await this.model.reloadBackground(
-        this.weatherController.getCurrentTime(),
-        this.weatherController.getWeatherString(),
-      );
+      await this.view.bindChangeBackground(this.handleChangeBackground.bind(this));
+      await this.model.reloadBackground(this.weatherController.getCurrentTime(), this.weatherController.getWeatherString());
       this.view.addBackground(this.model.backgroundImageURL);
       await this.view.hideLoading();
     } catch (error) {
@@ -81,34 +63,22 @@ export default class AppController {
     await this.view.showLoading();
     const temperatureType = this.view.changeTemperatureType();
     this.model.localData.temperatureType = temperatureType;
-    this.weatherController.handleChangeTemperatureType(
-      temperatureType,
-    );
+    this.weatherController.handleChangeTemperatureType(temperatureType);
     await this.view.hideLoading();
   }
 
   async handleChangeLanguage(language) {
     this.model.localData.language = language;
     await this.view.showLoading();
-    await this.mapController.handleChangeLanguage(
-      this.model.localData.language,
-    );
-    await this.view.bindSearchCoordinates(
-      this.handleSearch.bind(this),
-      this.mapController.model.geocoder,
-    );
-    this.weatherController.handleChangeLanguage(
-      this.model.localData.language,
-    );
+    await this.mapController.handleChangeLanguage(this.model.localData.language);
+    await this.view.bindSearchCoordinates(this.handleSearch.bind(this), this.mapController.model.geocoder);
+    this.weatherController.handleChangeLanguage(this.model.localData.language);
     await this.view.hideLoading();
   }
 
   async handleChangeBackground() {
     await this.view.showLoading();
-    this.model.reloadBackground(
-      this.weatherController.getCurrentTime(),
-      this.weatherController.getWeatherString(),
-    );
+    this.model.reloadBackground(this.weatherController.getCurrentTime(), this.weatherController.getWeatherString());
     this.view.addBackground(this.model.backgroundImageURL);
     await this.view.hideLoading();
   }

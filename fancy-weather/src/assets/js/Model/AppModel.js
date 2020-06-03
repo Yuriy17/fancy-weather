@@ -22,11 +22,9 @@ export default class AppModel {
 
     setLocalData() {
       const fancyLocalStorage = window.localStorage.getItem('fancyWeatherLocalData');
-      console.log(fancyLocalStorage);
 
       if (fancyLocalStorage) {
         this.localData = JSON.parse(fancyLocalStorage);
-        console.log(this.localData);
       } else {
         this.localData = {
           language: 'en',
