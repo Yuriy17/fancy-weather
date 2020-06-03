@@ -23,7 +23,7 @@ export default class MapController {
   }
 
   handleSpeechRecognition() {
-    if (this.recognition) {
+    if (this.recognition !== undefined) {
       if (this.view.speechRecognitionElement.classList.contains('active')) {
         this.recognition.stop();
       } else {
@@ -31,13 +31,15 @@ export default class MapController {
       }
     } else {
       this.recognition = new window.SpeechRecognition();
+
       this.recognition.interimResults = true;
+
       this.recognition.addEventListener('result', (e) => {
         const transcript = Array.from(e.results)
           .map((result) => result[0])
           .map((result) => result.transcript)
           .join('');
-        this.view.searchInputElement.value = transcript;
+        this.model.geocoder.query(transcript);
       });
       this.recognition.addEventListener('end', () => {
         this.view.speechRecognitionElement.classList.remove('active');

@@ -1,3 +1,5 @@
+import languages from '../Model/languages.json';
+
 export const coordinatesGeocoder = (query) => {
   // match anything which looks like a decimal degrees coordinate pair
   const matches = query.match(
@@ -108,6 +110,7 @@ export function getSearchParams(userTime, userWeather, latitude) {
       break;
   }
 
+
   if (latitude < 0) {
     season = ['Summer', 'Autumn', 'Winter', 'Spring'][getSeason(userTime)];
   } else {
@@ -133,4 +136,54 @@ export function translateUtile(targetLang, sourceLang, sourceText) {
   const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${
     sourceLang}&tl=${targetLang}&dt=t&q=${encodeURI(sourceText)}`;
   return fetch(url).then((response) => response.json()).then((response) => response[0][0][0]);
+}
+
+export function getDateString(timezone, language) {
+  const today = new Date();
+
+  let localeDateString = '';
+  if (language === 'be') {
+    const vv = today.toLocaleDateString('en-US', {
+      weekday: 'long',
+      timeZone: timezone,
+    });
+    const indexOfWeekday = languages.en.weekday.indexOf(vv);
+    const weekdayString = languages.be.weekday[indexOfWeekday].substring(0, 4);
+
+    const ss = today.toLocaleDateString('en-US', {
+      month: 'long',
+      timeZone: timezone,
+    });
+
+
+    const indexOfMonth = languages.en.months.indexOf(ss);
+    const monthString = languages.be.months[indexOfMonth];
+
+    const dayNumber = today.toLocaleDateString('en-US', {
+      day: 'numeric',
+      timeZone: timezone,
+    });
+
+    localeDateString = `${weekdayString}, ${monthString} ${dayNumber},&nbsp;`;
+  } else {
+    const locale = languages[language].localeString;
+    localeDateString = `${today.toLocaleDateString(locale, {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'long',
+      timeZone: timezone,
+    })},&nbsp;`;
+  }
+  return localeDateString;
+}
+
+export function getTime(timezone) {
+  const today = new Date();
+  const time = today.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: timezone,
+  });
+  return time;
 }

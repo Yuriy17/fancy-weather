@@ -52,13 +52,19 @@ export default class AppModel {
           userWeather, this.latitude);
         url.append('method', 'flickr.photos.search');
         url.append('tags', param);
-        //        url.append('group_id', '16765852@N00');
         url.append('api_key', FLICKR_KEY);
         url.append('lat', `${this.latitude}`);
         url.append('lon', `${this.longitude}`);
         url.append('format', 'json');
         url.append('extras', 'url_l');
         url.append('nojsoncallback', '1');
+
+        // eslint-disable-next-line no-console
+        console.log(`Данные о параметрах запроса фонового изображения:
+        ${param} - сезон, время суток, день или ночь
+        ${this.latitude}, ${this.longitude} - широта и долгота
+        `);
+
 
         const apiCall = await fetch(`${proxyUrl}https://api.flickr.com/services/rest?${url}`);
         const response = await apiCall.json();

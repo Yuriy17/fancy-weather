@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import languages from '../Model/languages.json';
+import { getDateString, getTime } from '../utils/utils';
 
 const Skycons = require('skycons')(window);
 
@@ -33,8 +34,10 @@ export default class WeatherView {
     const currentState = document.createElement('div');
     currentState.className = 'current-state';
     currentState.insertAdjacentHTML('beforeend', this.addCurrentWeatherContent(current));
-    this.date = currentState.querySelector('.current-state__date');
-    this.startTime(timezone);
+    const dateElement = currentState.querySelector('.current-state__date');
+    dateElement.innerHTML = getDateString(timezone, this.language);
+    const timeElement = currentState.querySelector('.current-state__time');
+    timeElement.innerHTML = getTime(timezone);
     currentContainer.appendChild(currentState);
     const forecast = document.createElement('div');
     forecast.className = 'forecast';
@@ -52,36 +55,15 @@ export default class WeatherView {
     skycons.play();
   }
 
-  startTime(timezone) {
-    const today = new Date();
-    const options = {
-      weekday: 'short',
-      day: 'numeric',
-      month: 'long',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: false,
-    };
-
-    if (timezone) {
-      options.timeZone = timezone;
-      this.currentTime = new Date(
-        today.toLocaleString(languages[this.language].localeString, {
-          timeZone: timezone,
-        }),
-      );
-    } else {
-      this.currentTime = new Date();
-    }
-
-    this.date.innerHTML = today.toLocaleString(languages[this.language].localeString, options);
-  }
 
   addCurrentWeatherContent(current) {
     this.skyconsIdCount += 1;
     return `<div class="current-state__location-info">
                  <div class="current-state__places-name">${current.city}, ${current.country}</div>
-                 <div id="date" class="current-state__date"></div>
+                 <div id="date-time">
+                   <div class="current-state__date"></div>
+                   <div id="time" class="current-state__time"></div>
+                 </div>
              </div>
              <div class="current-state__weather-info">
                  <div class="current-state__big-number">${Math.round(current.temperature)}°</div>

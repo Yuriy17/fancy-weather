@@ -18,11 +18,7 @@ export default class AppView {
   init(temperatureType, language) {
     AppView.render(temperatureType, language);
     this.controlPanel = document.querySelector('.control-panel');
-    [
-      this.buttonReload,
-      this.buttonF,
-      this.buttonC,
-    ] = this.controlPanel.querySelectorAll('.mdc-button__ripple');
+    [this.buttonReload, this.buttonF, this.buttonC] = this.controlPanel.querySelectorAll('.mdc-button__ripple');
     this.select = new MDCSelect(document.querySelector('.mdc-select'));
   }
 
@@ -109,19 +105,13 @@ export default class AppView {
     const buttonFahrenheit = this.buttonF.closest('button');
     // toggle Fahrenheit and Celsius buttons
     let type;
-    if (
-      hasClass(buttonCelsius, 'mdc-button--raised')
-      && hasClass(buttonFahrenheit, 'mdc-button--outlined')
-    ) {
+    if (hasClass(buttonCelsius, 'mdc-button--raised') && hasClass(buttonFahrenheit, 'mdc-button--outlined')) {
       removeClass(buttonCelsius, 'mdc-button--raised');
       addClass(buttonCelsius, 'mdc-button--outlined');
       removeClass(buttonFahrenheit, 'mdc-button--outlined');
       addClass(buttonFahrenheit, 'mdc-button--raised');
       type = 'us';
-    } else if (
-      hasClass(buttonFahrenheit, 'mdc-button--raised')
-      && hasClass(buttonCelsius, 'mdc-button--outlined')
-    ) {
+    } else if (hasClass(buttonFahrenheit, 'mdc-button--raised') && hasClass(buttonCelsius, 'mdc-button--outlined')) {
       removeClass(buttonCelsius, 'mdc-button--outlined');
       addClass(buttonCelsius, 'mdc-button--raised');
       removeClass(buttonFahrenheit, 'mdc-button--raised');
@@ -191,7 +181,9 @@ export default class AppView {
                         </div>
                     </div>
                     <div class="switch-panel">
-                        <button id="fahrenheit" class="mdc-button mdc-button--${temperatureType === 'us' ? 'raised' : 'outlined'}">
+                        <button id="fahrenheit" class="mdc-button mdc-button--${
+  temperatureType === 'us' ? 'raised' : 'outlined'
+}">
                             <span class="mdc-button__ripple"></span>
                             °F
                         </button>

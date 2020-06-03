@@ -35,13 +35,13 @@ export default class AppController {
 
       this.model.updateCoordinates(coords);
 
-      await this.weatherController.init(coords, locInfo, this.model.localData.language);
+      await this.weatherController.init(coords, locInfo, this.model.localData.language, this.model.localData.temperatureType);
 
       await this.view.bindSearchCoordinates(this.handleSearch.bind(this), this.mapController.model.geocoder);
       await this.view.bindChangeTemperatureType(this.handleChangeTemperatureType.bind(this));
       await this.view.bindChangeLanguage(this.handleChangeLanguage.bind(this));
       await this.view.bindChangeBackground(this.handleChangeBackground.bind(this));
-      await this.model.reloadBackground(this.weatherController.getCurrentTime(), this.weatherController.getWeatherString());
+      await this.model.reloadBackground(this.weatherController.getCurrentDate(), this.weatherController.getWeatherString());
       this.view.addBackground(this.model.backgroundImageURL);
       await this.view.hideLoading();
     } catch (error) {
@@ -68,17 +68,17 @@ export default class AppController {
   }
 
   async handleChangeLanguage(language) {
-    this.model.localData.language = language;
     await this.view.showLoading();
+    this.model.localData.language = language;
     await this.mapController.handleChangeLanguage(this.model.localData.language);
     await this.view.bindSearchCoordinates(this.handleSearch.bind(this), this.mapController.model.geocoder);
-    this.weatherController.handleChangeLanguage(this.model.localData.language);
+    await this.weatherController.handleChangeLanguage(this.model.localData.language);
     await this.view.hideLoading();
   }
 
   async handleChangeBackground() {
     await this.view.showLoading();
-    this.model.reloadBackground(this.weatherController.getCurrentTime(), this.weatherController.getWeatherString());
+    this.model.reloadBackground(this.weatherController.getCurrentDate(), this.weatherController.getWeatherString());
     this.view.addBackground(this.model.backgroundImageURL);
     await this.view.hideLoading();
   }

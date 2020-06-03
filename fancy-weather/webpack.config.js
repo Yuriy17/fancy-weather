@@ -12,8 +12,8 @@ module.exports = {
   entry: ['./src/main.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
-    filename: 'app.js',
+    publicPath: './',
+    filename: './app.js',
   },
   mode: 'development',
   devtool: 'inline-source-map',

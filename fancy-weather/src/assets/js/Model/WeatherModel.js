@@ -14,11 +14,9 @@ export default class WeatherModel {
 
   previousLang;
 
-  unit = 'uk2';
+  unit;
 
   getCoordinates;
-
-  temperatureType = 'C';
 
   currentWeatherData;
 
@@ -32,11 +30,19 @@ export default class WeatherModel {
 
   currentWeatherSummary;
 
-  async init(coords, locInfo, language) {
+  async init(coords, locInfo, language, unit) {
+    const today = new Date();
+
     this.updateCoordinates(coords[0], coords[1], locInfo[1], locInfo[0]);
     this.lang = language;
     this.previousLang = 'en';
+    this.unit = unit;
 
+    this.currentDate = new Date(
+      today.toLocaleString('en-US', {
+        timeZone: this.currentTimezone,
+      }),
+    );
     await this.updateWeatherData();
   }
 

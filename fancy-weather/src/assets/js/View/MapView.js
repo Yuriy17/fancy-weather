@@ -110,7 +110,10 @@ export default class MapView {
   bindSpeechRecognition(handler) {
     this.speechRecognitionElement.addEventListener('click', (e) => {
       e.preventDefault();
-      handler();
+
+      if (e.currentTarget.classList.contains('speech-recognition')) {
+        handler();
+      }
     });
   }
 

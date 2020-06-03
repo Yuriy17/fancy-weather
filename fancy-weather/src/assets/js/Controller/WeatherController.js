@@ -1,3 +1,5 @@
+import { getTime } from '../utils/utils';
+
 export default class WeatherController {
   locale;
 
@@ -6,8 +8,8 @@ export default class WeatherController {
     this.view = view;
   }
 
-  async init(coords, locInfo, language) {
-    await this.model.init(coords, locInfo, language);
+  async init(coords, locInfo, language, temperatureType) {
+    await this.model.init(coords, locInfo, language, temperatureType);
     await this.view.init(
       this.model.currentWeatherData,
       this.model.firstForecastData,
@@ -16,7 +18,9 @@ export default class WeatherController {
       this.model.lang,
     );
 
-    this.locale = setInterval(() => this.view.startTime(), 1000);
+    this.locale = setInterval(() => {
+      document.getElementById('time').innerText = getTime(this.model.currentTimezone);
+    }, 1000);
   }
 
   async handleSearchCoordinates(lat, lon, city, country) {
@@ -34,7 +38,7 @@ export default class WeatherController {
 
     clearInterval(this.locale);
     this.locale = setInterval(() => {
-      this.view.startTime(this.model.currentTimezone);
+      document.getElementById('time').innerText = getTime(this.model.currentTimezone);
     }, 2000);
   }
 
@@ -63,9 +67,10 @@ export default class WeatherController {
     );
   }
 
-  getCurrentTime() {
-    return this.view.currentTime;
+  getCurrentDate() {
+    return this.model.currentDate;
   }
+
 
   getWeatherString() {
     return this.model.currentWeatherSummary;
