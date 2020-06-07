@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import { MDCSelect } from '@material/select';
 import { hasClass, addClass, removeClass } from '../utils/utils';
+import languages from '../Model/languages.json';
 
 export default class AppView {
   select;
@@ -207,8 +208,8 @@ export default class AppView {
                     <div class="map-panel">
                         <div id="map" class="map-panel__map"></div>
                         <div class="map-panel__coordinates dark-bg">
-                            <div class="map-panel__coordinate"><span class="map-panel__latitude-header">Latitude</span>: <span class="map-panel__latitude">5'</span></div>
-                            <div class="map-panel__coordinate"><span class="map-panel__latitude-header">Longitude</span>: <span class="map-panel__longitude">2</span></div>
+                            <div class="map-panel__coordinate"><span class="map-panel__latitude-header">${languages[language].latitude}</span>: <span class="map-panel__latitude">5'</span></div>
+                            <div class="map-panel__coordinate"><span class="map-panel__latitude-header">${languages[language].longitude}</span>: <span class="map-panel__longitude">2</span></div>
                         </div>
                     </div>
                 </div>
