@@ -1,2 +1,2 @@
-# yuriy17-RS2020Q1
-Private repository for @yuriy17
+# fancy weather
+deploy - https://yuriy17-fancy-weather.netlify.app/
